@@ -16,6 +16,8 @@ export const TaskScreen = ({ navigation }) => {
 
   // State para armazenar o texto do input
   const [newTaskText, setNewTaskText] = useState('');
+  const [sucessMessage, setSucessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["tasks"],
@@ -57,11 +59,19 @@ export const TaskScreen = ({ navigation }) => {
   const handleCreateTask = () => {
     if (newTaskText.trim() !== '') {
       createTaskMutation.mutate({ description: newTaskText });
+      setSucessMessage('Item adicionado com sucesso!');
+      setTimeout(() => {
+        setSucessMessage('');
+      }, 800);
     }
   };  
 
-  const handleDeleteTask = (objectId) => {
+  const handleDeleteTask = (objectId, description) => {
     deleteTaskMutation.mutate(objectId);
+    setSucessMessage(`O item "${description}" foi removido com sucesso!`);
+    setTimeout(() => {
+      setSucessMessage('');
+    }, 800);
   };
 
   if (isLoading) {
@@ -85,6 +95,8 @@ export const TaskScreen = ({ navigation }) => {
     <View style={styles.container}>
 
       {isFetching && <Text>IS FETCHING</Text>}
+      {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
+      {sucessMessage && <Text style={styles.sucess}>{sucessMessage}</Text>}
 
       <View style={styles.header}>
         <Text style={styles.title}>Lista de</Text>
@@ -118,7 +130,7 @@ export const TaskScreen = ({ navigation }) => {
             task={item}
             navigation={navigation}
             taskDoneChange={mutation.mutate}
-            onDeletePress={(objectId) => handleDeleteTask(objectId)}
+            onDeletePress={(objectId, description) => handleDeleteTask(objectId, description)}
           />
         )}
       />
