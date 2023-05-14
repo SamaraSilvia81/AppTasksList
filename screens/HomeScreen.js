@@ -1,52 +1,34 @@
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View } from "react-native";
-import { Button, Input, Text } from "@rneui/themed";
-import { useState } from "react";
+import { StyleSheet, View, TouchableOpacity, Linking } from "react-native";
+import { Button, Text } from "@rneui/themed";
 
 export const HomeScreen = ({ navigation }) => {
-  const [valor1, setValor1] = useState("");
-  const [valor2, setValor2] = useState("");
+
+  const handleLinkedInPress = () => {
+    Linking.openURL('https://www.linkedin.com/in/samara-silvia-9a2a26231/');
+  }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.container}>
-          <Text h1 h1Style={styles.text}>
-            Cálculo
-          </Text>
-          <Input
-            value={valor1}
-            onChange={(text) => setValor1(text)}
-            placeholder="Digite um valor"
-          />
-          <Input
-            value={valor2}
-            onChange={(text) => setValor2(text)}
-            placeholder="Digite um valor"
-          />
-          <Text style={styles.text}>Resultado</Text>
+          <View style={styles.header}>
+            <Text style={styles.title}>Welcome To</Text>
+          </View>
           <Button
-            title="Go to Details '86'"
-            onPress={() => {
-              /* 1. Navigate to the Details route with params */
-              navigation.navigate("Details", {
-                itemId: 86,
-                otherParam: "anything you want here",
-              });
-            }}
-          />
-          <Button
-            title="Star Wars People"
-            onPress={() => {
-              navigation.navigate("People");
-            }}
-          />
-          <Button
-            title="Lista de Tarefas"
+            title="Tasks List"
             onPress={() => {
               navigation.navigate("Task");
             }}
+            buttonStyle={{
+              backgroundColor: '#5218e7',
+              borderRadius: 5,
+            }}
           />
         </View>
+        <TouchableOpacity style={styles.footer} onPress={handleLinkedInPress}>
+          <Text style={styles.text}>By SamaraSilvia</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -59,11 +41,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  text:{
+    fontSize: 14,
+    marginBottom: 20,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    color: '#5218e7',
+  },
   safeAreaView: {
     flex: 1,
-    backgroundColor: "red",
-  },
-  text: {
-    color: "black",
-  },
+    backgroundColor: "#fff",
+  }
 });

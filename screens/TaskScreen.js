@@ -99,9 +99,9 @@ export const TaskScreen = ({ navigation }) => {
       {sucessMessage && <Text style={styles.sucess}>{sucessMessage}</Text>}
 
       <View style={styles.header}>
-        <Text style={styles.title}>Lista de</Text>
+        <Text style={styles.title}>Tasks</Text>
         <View style={styles.background}>
-          <Text style={styles.span}>Tarefas</Text>
+          <Text style={styles.span}>List</Text>
         </View>
       </View>
       <View style={styles.sectionInput}>
